@@ -1,0 +1,64 @@
+
+#include "cache.h"
+#include <math.h>
+#include <iostream>
+
+using namespace std;
+
+//668353
+//343823
+
+
+cache::cache (unsigned size, unsigned assoc_i, unsigned linesize)
+{
+  assoc = assoc_i;
+  index = size / (assoc * linesize);
+  cache_mem = new cache_v[index*assoc];
+  hit_num = 0;
+  miss_num = 0;
+  line = linesize;
+}
+	  
+void cache::read (unsigned address)
+{
+  
+  //unsigned int offset_value = address % linesize;
+  unsigned int index_value = (address >> (unsigned int)log2(line)) % index;
+  unsigned int tag_value = address >> ((unsigned int)log2(line) + (unsigned int)log2(index));
+  
+  //------------CHECK IF DATA IS IN CACHE------------//
+  //-------------------------------------------------//
+  int temp_lru = 0;
+  bool found = false;
+  unsigned int toBereplaceAdd = cache_mem[index_value].lru;
+  int firstInvalidBlck = -1; 
+
+ for(unsigned int i = index_value; i < (index*assoc); i +=(index) )  //go to index 
+   { 
+
+     if(cache_mem[i].valid == true && cache_mem[i].tag == tag_value)
+       {	
+	 ++hit_num; // hit
+	 temp_lru = cache_mem[i].lru;	        
+       }
+
+   }
+
+  for(unsigned int y = index_value; y < (index*assoc); y+=(index)) //update lru
+    {
+	   
+  
+	 
+	 if(cache_mem[y].lru < temp_lru)
+	   cache_mem[y].lru = cache_mem[y].lru + 1;  
+       } 
+     cache_mem[i].lru = 1; 
+
+     if((int)toBereplaceAdd < cache_mem[i].lru)
+         {
+	   toBereplaceAdd = i;
+	   
+	 }
+
+     if(cache_mem[i].valid == false && firstInvalidBlck == -1)
+       firstInvalidBlck = i;
