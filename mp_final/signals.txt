@@ -1,0 +1,104 @@
+
+
+
+// for the load process
+
+ld_A, ld_B, ld_IR, ld_PC, ld_ALUout, ld_MDR ~ 1 bit
+A_reg, A_new ~ 32 bit
+B_reg, B_new ~ 32 bit
+IR_reg, IR_new ~ 32 bit
+PC_reg, PC_new ~ 8 bit
+ALUout_reg, ALUout_new ~ 32 bit
+MDR_reg, MDR_new ~ 32 bit
+
+// AND_gate
+
+PCWriteCond ~ OC
+zero_s ~ 1 bit
+S0 ~ 1 bit
+
+// OR_gate
+
+PCWrite ~ OC
+PCC_enable ~ 1 bit
+
+// PC value
+
+// PC_component
+
+IorD ~ OC
+S5 ~ 32 bit
+PCC_value ~ 32 bit
+
+// Memory
+
+clk ~ 1 bit
+rst ~ 1 bit
+MemRead ~ OC
+MemWrite ~ OC
+MemData_s ~ 32 bit
+(Memory Data Register)
+
+
+// Instruction Register
+
+IRWrite ~ OC
+inst_31_26 ~ 6 bit
+inst_25_21 ~ 5 bit
+inst_20_16 ~ 5 bit
+inst_15_0 ~ 16 bit
+
+// Write Register
+
+RegDst ~ OC
+S1 ~ 5 bit
+
+// Write Data
+
+MemtoReg ~ OC
+S2 ~ 5 bit
+
+// Registers
+
+RegWrite ~OC
+(A Register)
+(B Register)
+
+// ALU input
+
+// First input
+
+S3 ~ 32 bit
+
+// Second input
+
+S4 ~ 32 bit
+sign_ex_s ~ 32 bit
+shift_32bit_s ~ 32 bit
+
+// Sign Extend
+
+// Shift Left 2 (32 bit output)
+
+// ALU (32 bit)
+
+ALUcontrol_s ~ 3 bit (don't really know, since all we need is op addi)
+OF_temp_s ~ 1 bit (to store value, not actually used)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
